@@ -21,7 +21,7 @@ func main() {
 	// for h.Len() > 0{
 	//     fmt.Println(h.pop())
 	// }
-	nums := []int{2, 4, 1, 3, 6, 9, 5}
+	nums := []int{2, 1, 2, 6, 5, 6, 58, 8, 6}
 	heapify(nums)
 	for len(nums) > 0 {
 		fmt.Println(pop(&nums))
@@ -66,7 +66,7 @@ func pop(nums *[]int) int {
 	return rst
 }
 
-func min_down(nums []int, i, n int) bool {
+func min_down(nums []int, i, n int) {
 	parent := i
 	for {
 		left := 2*parent + 1
@@ -83,5 +83,42 @@ func min_down(nums []int, i, n int) bool {
 		nums[parent], nums[max] = nums[max], nums[parent]
 		parent = max
 	}
-	return parent > i
+}
+
+
+//前k个高频元素
+func topKFrequent(nums []int, k int) []int {
+    m := map[int]int{}
+    for _ , v := range nums{
+        m[v]++
+    }
+    h := &my{}
+    heap.Init(h)
+    for i , v := range m{
+        heap.Push(h,[2]int{i,v})
+        if h.Len() > k{
+            heap.Pop(h)
+        }
+    }
+    ans := make([]int , k)
+    for i := 0 ; i < k ; i++{
+        ans[k - i - 1] = heap.Pop(h).([2]int)[0]
+    }
+    return ans
+}
+
+type my [][2]int
+
+func (h my) Len()int {return len(h)}
+func (h my) Less(i ,j int)bool {return h[i][1] < h[j][1]}
+func (h my) Swap(i , j int) {h[i] , h[j] = h[j] , h[i]}
+func (h *my) Push(x any){
+    *h = append(*h , x.([2]int))
+} 
+func (h *my) Pop() any{
+    old := *h
+    n := len(old)
+    x := old[n - 1]
+    *h = old[0:n-1]
+    return x
 }
