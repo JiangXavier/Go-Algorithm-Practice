@@ -7,7 +7,7 @@ import (
 func intToByteArray(num int) []byte {
 	// 将数字转换为字符串
 	numStr := fmt.Sprintf("%d", num)
-
+	
 	// 创建一个 []byte 数组
 	result := make([]byte, len(numStr))
 
@@ -24,7 +24,10 @@ func main() {
 
 	// 将整数按位存储到 []byte 数组中
 	byteArray := intToByteArray(num)
-
+	j := 99
+	numStr := fmt.Sprintf("%d", j)
+	fmt.Println(numStr)
+	fmt.Printf("%T" , numStr)
 	// 输出结果
 	fmt.Println(byteArray)
 }
